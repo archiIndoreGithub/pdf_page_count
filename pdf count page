@@ -1,0 +1,17 @@
+function pdf_page_count($filename){
+            $ci =&get_instance();
+            if (!$fp = @fopen($filename,"r")) {
+            }
+            else {
+                    $max=0;
+                    while(!feof($fp)) {
+                            $line = fgets($fp,255);
+                            if (preg_match('/\/Count [0-9]+/', $line, $matches)){
+                                    preg_match('/[0-9]+/',$matches[0], $matches2);
+                                    if ($max<$matches2[0]) $max=$matches2[0];
+                            }
+                    }
+                    fclose($fp);
+                    return $max;
+            }
+        }
